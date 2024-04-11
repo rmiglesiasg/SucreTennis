@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\MoveBall.cs" />
     <Compile Include="Assets\Scripts\MovePlayer.cs" />
+    <Compile Include="Assets\Scripts\MoveRival.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

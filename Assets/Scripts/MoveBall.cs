@@ -6,11 +6,12 @@ using UnityEngine;
 public class MoveBall : MonoBehaviour
 {
     Rigidbody2D ball;
-    float acc = 0.01f;
+    float acc = 4f;
+    float initVel = 20f;
 
     float vel;
-    int dirX = +1;
-    int dirY = 1;
+    int dirX = 1;
+    int dirY = -1;
 
     float cameraSize;
 
@@ -18,15 +19,15 @@ public class MoveBall : MonoBehaviour
     void Start()
     {
         ball = this.GetComponent<Rigidbody2D>();
-        vel = 1f;
         cameraSize = GameObject.Find("Main Camera").GetComponent<Camera>().orthographicSize;
+        vel = initVel;
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        vel += acc;
+        //vel += acc;
         ball.velocity = new Vector2(dirX*vel, dirY*vel);
 
         if (ball.position.y >= cameraSize - 3f & dirY > 0)
@@ -40,8 +41,14 @@ public class MoveBall : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.name == "Player")
+        {
             dirX *= -1;
+            vel += acc;
+        }
         else if (collision.collider.name == "Rival")
+        {
             dirX *= -1;
+            vel += acc;
+        }
     }
 }

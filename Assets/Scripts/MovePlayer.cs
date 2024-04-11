@@ -19,7 +19,7 @@ public class MovePlayer : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             float y = player.position.y;
-            y += 1;
+            y += 1.1f;
             if (y <= cameraSize - 3f)
             player.position = new Vector3 (player.position.x, y, 0);
         }
@@ -27,7 +27,7 @@ public class MovePlayer : MonoBehaviour
         else if (Input.GetKey(KeyCode.S))
         {
             float y = player.position.y;
-            y -= 1;
+            y -= 1.1f;
             if ( y >= -(cameraSize - 3f))
             player.position = new Vector3(player.position.x, y, 0);
         }
