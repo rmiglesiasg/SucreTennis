@@ -41,5 +41,7 @@ public class MoveRival : MonoBehaviour
         {
             rival.velocity = Vector2.zero;
         }
+
+        
     }
 }
