@@ -15,8 +15,8 @@ public class MoveBall : MonoBehaviour
     Rigidbody2D player;
     Rigidbody2D rival;
 
-    public TextMeshProUGUI playerScore;
-    public TextMeshProUGUI rivalScore;
+    public Text playerScore;
+    public Text rivalScore;
 
     float acc = 4f;
     float initVel = 25f;
