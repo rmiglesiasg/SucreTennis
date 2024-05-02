@@ -15,11 +15,11 @@ public class MoveBall : MonoBehaviour
     Rigidbody2D player;
     Rigidbody2D rival;
 
-    public Text playerScore;
-    public Text rivalScore;
+    public TextMeshProUGUI playerScore;
+    public TextMeshProUGUI rivalScore;
 
     float acc = 4f;
-    float initVel = 25f;
+    float initVel = 20f;
     int initDirX = -1;
     int initDirY = 1;
 
@@ -43,7 +43,7 @@ public class MoveBall : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         ball.velocity = new Vector2(dirX*vel, dirY*vel);
 

@@ -419,6 +419,7 @@
 "Assets/M2Mqtt/WinRT/Queue.cs"
 "Assets/Scripts/M2MqttUnityClient.cs"
 "Assets/Scripts/M2MqttUnityGame.cs"
+"Assets/Scripts/MenuHandler.cs"
 "Assets/Scripts/MoveBall.cs"
 "Assets/Scripts/MovePlayer.cs"
 "Assets/Scripts/MoveRival.cs"

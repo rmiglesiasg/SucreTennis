@@ -7,6 +7,7 @@ using UnityEngine;
 public class MovePlayer : MonoBehaviour
 {
     float TOP_VALUE_POTENCIOMETER = 1024;
+    float PLAYER_SPEED = 70f;
 
     public bool connected = false;
     public float input;
@@ -33,20 +34,17 @@ public class MovePlayer : MonoBehaviour
     {
         if (connected)
         {
-            Debug.Log("SucreControls");
-            if (input <= TOP_VALUE_POTENCIOMETER/2)
-            {
-                float y = ((TOP_VALUE_POTENCIOMETER / 2) - input) / convfactor;
-                //Debug.Log(y);
-                if (y <= cameraSize - 3f)
-                    player.position = new Vector3(player.position.x, y, 0f);
-            }
-            else
-            {
-                float y = ((TOP_VALUE_POTENCIOMETER/2) - input) / convfactor;
-                if (y >= -(cameraSize - 3f))
-                    player.position = new Vector3(player.position.x, y, 0f);
-            }
+            //Debug.Log("SucreControls");
+            float y = ((TOP_VALUE_POTENCIOMETER / 2) - input) / convfactor;
+
+            if (y >= cameraSize - 3f)
+                y = cameraSize - 3f;
+            else if (y <= -(cameraSize - 3f))
+                y = -(cameraSize - 3f);
+
+            Vector3 target = new Vector3(player.position.x, y, 0f);
+
+            player.position = Vector3.MoveTowards(player.position, target, PLAYER_SPEED * Time.deltaTime);
         }
 
         else

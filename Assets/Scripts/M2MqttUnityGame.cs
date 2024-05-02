@@ -30,14 +30,22 @@ using UnityEngine.UI;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using M2MqttUnity;
+using TMPro;
 
 public class M2MqttUnityGame : M2MqttUnityClient
 {
+    System.Random rnd = new();
+
+    MenuHandler menu;
     MovePlayer player;
+    int id;
+    
+
+    public TextMeshProUGUI idText;
 
     public void TestPublish()
     {
-        client.Publish("gametest", System.Text.Encoding.UTF8.GetBytes("Test message"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+        client.Publish("Pong" + id, System.Text.Encoding.UTF8.GetBytes("Test message"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
         Debug.Log("Test message published");
     }
 
@@ -54,13 +62,13 @@ public class M2MqttUnityGame : M2MqttUnityClient
 
     protected override void SubscribeTopics()
     {
-        client.Subscribe(new string[] { "gametest" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-        Debug.Log("sus");
+        client.Subscribe(new string[] { "Pong" + id }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+        //Debug.Log("sus");
     }
 
     protected override void UnsubscribeTopics()
     {
-        client.Unsubscribe(new string[] { "gametest" });
+        client.Unsubscribe(new string[] { "Pong" + id });
     }
 
     protected override void OnConnectionFailed(string errorMessage)
@@ -81,7 +89,10 @@ public class M2MqttUnityGame : M2MqttUnityClient
     protected override void Start()
     {
         base.Start();
+        menu = GameObject.Find("Canvas").GetComponent<MenuHandler>();
         player = GameObject.Find("Player").GetComponent<MovePlayer>();
+        id = 1;//rnd.Next(100000);
+        idText.text += id;
         Connect();
     }
 
@@ -89,10 +100,18 @@ public class M2MqttUnityGame : M2MqttUnityClient
     {
         string msg = System.Text.Encoding.UTF8.GetString(message);
         //Debug.Log("Received: " + msg);
-        if (topic == "gametest")
+        if (topic == "Pong" + id)
         {
-            player.input = float.Parse(msg);
+            if (float.Parse(msg) <= 1)
+            {
+                if (float.Parse(msg) == 1)
+                    menu.start = true;
+
+            }
+            else
+                player.input = float.Parse(msg) - 10000;
         }
+
     }
 
     private void ProcessMessage(string msg)

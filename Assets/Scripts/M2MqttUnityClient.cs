@@ -51,7 +51,7 @@ namespace M2MqttUnity
         public string certificateName;
         [Header("Connection parameters")]
         [Tooltip("Connection to the broker is delayed by the the given milliseconds")]
-        public int connectionDelay = 500;
+        public int connectionDelay = 0;
         [Tooltip("Connection timeout in milliseconds")]
         public int timeoutOnConnection = MqttSettings.MQTT_CONNECT_TIMEOUT;
         [Tooltip("Connect on startup")]
