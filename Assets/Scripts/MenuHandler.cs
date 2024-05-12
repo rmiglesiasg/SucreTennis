@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuHandler : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class MenuHandler : MonoBehaviour
 
     public GameObject scoreboard;
     public GameObject startMenu;
+    public Image firstPlayer;
+    public Image secondPlayer;
+
 
     private void Awake()
     {
@@ -17,7 +21,8 @@ public class MenuHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+        firstPlayer.color = Color.gray;
+        secondPlayer.color = Color.gray;
     }
 
     // Update is called once per frame

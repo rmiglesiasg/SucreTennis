@@ -62,13 +62,13 @@ public class M2MqttUnityGame : M2MqttUnityClient
 
     protected override void SubscribeTopics()
     {
-        client.Subscribe(new string[] { "Pong" + id }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+        client.Subscribe(new string[] { id.ToString() }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE }); //"Pong" + id }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
         //Debug.Log("sus");
     }
 
     protected override void UnsubscribeTopics()
     {
-        client.Unsubscribe(new string[] { "Pong" + id });
+        client.Unsubscribe(new string[] { id.ToString() }); //"Pong" + id });
     }
 
     protected override void OnConnectionFailed(string errorMessage)
@@ -99,24 +99,54 @@ public class M2MqttUnityGame : M2MqttUnityClient
     protected override void DecodeMessage(string topic, byte[] message)
     {
         string msg = System.Text.Encoding.UTF8.GetString(message);
-        //Debug.Log("Received: " + msg);
-        if (topic == "Pong" + id)
+        Debug.Log("Received: " + msg);
+        if (topic == id.ToString())//"Pong" + id)
         {
-            if (float.Parse(msg) <= 1)
-            {
-                if (float.Parse(msg) == 1)
-                    menu.start = true;
+            SucreInput sucreInput = ProcessMessage(msg);
 
-            }
-            else
-                player.input = float.Parse(msg) - 10000;
+            menu.start = sucreInput.boton;
+            player.input = sucreInput.control;
+            if (player.deviceID == "")
+                sucreInput.deviceID = player.deviceID;
         }
 
     }
 
-    private void ProcessMessage(string msg)
+    private SucreInput ProcessMessage(string msg)
     {
-        
+        int index = 0;
+        string temp  = "";
+        char prevch = ' ';
+        SucreInput si = new SucreInput();
+
+        foreach (char ch in msg)
+        {
+            if (prevch == ':')
+            {
+                if(ch == ',' | ch == '}')
+                {
+                    temp = temp.Trim(' ', '"');
+
+                    if (index == 0)
+                        si.deviceID = temp;
+                    else if (index == 1)
+                        si.control = int.Parse(temp);
+                    else
+                        si.boton = temp == "true";
+
+                    index += 1;
+                    prevch = ch;
+                    temp = "";
+                }
+                else
+                    temp += ch;
+
+            }
+            else
+                prevch = ch;
+        }
+
+        return si;
     }
 
     protected override void Update()

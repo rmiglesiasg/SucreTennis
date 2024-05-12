@@ -11,6 +11,9 @@ public class MoveRival : MonoBehaviour
     int vel = 40;
     int dir = 0;
 
+    public string deviceID;
+    public bool secondPlayer;
+
     // Start is called before the first frame update
     void Start()
     {

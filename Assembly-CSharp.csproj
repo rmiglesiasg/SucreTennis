@@ -102,12 +102,13 @@
     <Compile Include="Assets\M2Mqtt\Session\MqttBrokerSession.cs" />
     <Compile Include="Assets\M2Mqtt\Messages\MqttMsgUnsubscribeEventArgs.cs" />
     <Compile Include="Assets\M2Mqtt\IMqttNetworkChannel.cs" />
+    <Compile Include="Assets\Scripts\MenuHandler.cs" />
     <Compile Include="Assets\M2Mqtt\Messages\MqttMsgSubscribe.cs" />
     <Compile Include="Assets\M2Mqtt\Messages\MqttMsgPublishedEventArgs.cs" />
     <Compile Include="Assets\M2Mqtt\Messages\MqttMsgPubcomp.cs" />
     <Compile Include="Assets\M2Mqtt\Internal\MsgInternalEvent.cs" />
     <Compile Include="Assets\M2Mqtt\Exceptions\MqttClientException.cs" />
-    <Compile Include="Assets\Scripts\MenuHandler.cs" />
+    <Compile Include="Assets\Scripts\SucreInput.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

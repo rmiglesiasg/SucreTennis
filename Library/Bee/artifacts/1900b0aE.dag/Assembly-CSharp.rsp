@@ -423,6 +423,7 @@
 "Assets/Scripts/MoveBall.cs"
 "Assets/Scripts/MovePlayer.cs"
 "Assets/Scripts/MoveRival.cs"
+"Assets/Scripts/SucreInput.cs"
 -langversion:9.0
 
 /deterministic

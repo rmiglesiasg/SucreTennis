@@ -11,6 +11,7 @@ public class MovePlayer : MonoBehaviour
 
     public bool connected = false;
     public float input;
+    public string deviceID = "";
 
     Transform player;
     float cameraSize;
