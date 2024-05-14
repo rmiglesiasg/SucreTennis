@@ -20,7 +20,7 @@ public class MovePlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = this.GetComponent<Transform>(); //GameObject.Find("Player").GetComponent<Transform>();
+        player = this.GetComponent<Transform>();
         cameraSize = GameObject.Find("Main Camera").GetComponent<Camera>().orthographicSize;
         convfactor = (TOP_VALUE_POTENCIOMETER / 2) / cameraSize;
     }

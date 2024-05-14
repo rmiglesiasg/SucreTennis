@@ -38,6 +38,7 @@ public class M2MqttUnityGame : M2MqttUnityClient
 
     MenuHandler menu;
     MovePlayer player;
+    MoveRival rival;
     int id;
     
 
@@ -45,7 +46,7 @@ public class M2MqttUnityGame : M2MqttUnityClient
 
     public void TestPublish()
     {
-        client.Publish("Pong" + id, System.Text.Encoding.UTF8.GetBytes("Test message"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+        client.Publish(id.ToString(), System.Text.Encoding.UTF8.GetBytes("Test message"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false); //"Pong" + id, System.Text.Encoding.UTF8.GetBytes("Test message"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
         Debug.Log("Test message published");
     }
 
@@ -91,23 +92,46 @@ public class M2MqttUnityGame : M2MqttUnityClient
         base.Start();
         menu = GameObject.Find("Canvas").GetComponent<MenuHandler>();
         player = GameObject.Find("Player").GetComponent<MovePlayer>();
+        rival = GameObject.Find("Rival").GetComponent<MoveRival>();
         id = 1;//rnd.Next(100000);
         idText.text += id;
         Connect();
     }
 
+    bool buffer = false;
     protected override void DecodeMessage(string topic, byte[] message)
     {
         string msg = System.Text.Encoding.UTF8.GetString(message);
-        Debug.Log("Received: " + msg);
+        //Debug.Log("Received: " + msg);
         if (topic == id.ToString())//"Pong" + id)
         {
             SucreInput sucreInput = ProcessMessage(msg);
 
-            menu.start = sucreInput.boton;
-            player.input = sucreInput.control;
             if (player.deviceID == "")
-                sucreInput.deviceID = player.deviceID;
+                player.deviceID = sucreInput.deviceID;
+            else if (rival.deviceID == "" & sucreInput.deviceID != player.deviceID)
+                rival.deviceID = sucreInput.deviceID;
+
+            
+
+            if (!menu.start)
+                menu.start = sucreInput.boton;
+            else if (menu.start & !menu.playerSelected & !buffer)
+                menu.playerSelected = sucreInput.boton;
+
+            if (menu.start & !menu.playerSelected)
+                menu.selector = sucreInput.control;
+
+            if (sucreInput.deviceID == player.deviceID)
+                player.input = sucreInput.control;
+            else if (sucreInput.deviceID == rival.deviceID)
+                rival.rivalInput = sucreInput.control;
+
+            if (sucreInput.boton)
+                buffer = true;
+            else
+                buffer = false;
+
         }
 
     }
@@ -126,6 +150,7 @@ public class M2MqttUnityGame : M2MqttUnityClient
                 if(ch == ',' | ch == '}')
                 {
                     temp = temp.Trim(' ', '"');
+                    //Debug.Log(index);
 
                     if (index == 0)
                         si.deviceID = temp;
@@ -145,7 +170,6 @@ public class M2MqttUnityGame : M2MqttUnityClient
             else
                 prevch = ch;
         }
-
         return si;
     }
 

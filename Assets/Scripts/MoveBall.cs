@@ -19,7 +19,7 @@ public class MoveBall : MonoBehaviour
     public TextMeshProUGUI rivalScore;
 
     float acc = 4f;
-    float initVel = 20f;
+    float initVel = 25f;
     int initDirX = -1;
     int initDirY = 1;
 
@@ -38,8 +38,6 @@ public class MoveBall : MonoBehaviour
 
         vel = initVel;
         initialShot(0, 2);
-        //dirX = initDirX;
-        //dirY = initDirY;
     }
 
     // Update is called once per frame
