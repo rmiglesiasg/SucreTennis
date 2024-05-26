@@ -34,7 +34,7 @@ using TMPro;
 
 public class M2MqttUnityGame : M2MqttUnityClient
 {
-    System.Random rnd = new();
+    System.Random rnd = new System.Random();
 
     MenuHandler menu;
     MovePlayer player;
@@ -44,10 +44,11 @@ public class M2MqttUnityGame : M2MqttUnityClient
 
     public TextMeshProUGUI idText;
 
-    public void TestPublish()
+    public void Publish(string dvc)
     {
-        client.Publish(id.ToString(), System.Text.Encoding.UTF8.GetBytes("Test message"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false); //"Pong" + id, System.Text.Encoding.UTF8.GetBytes("Test message"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
-        Debug.Log("Test message published");
+        client.Publish("1_" + id + "_" + dvc, System.Text.Encoding.UTF8.GetBytes("{" + '"' + "bocina" + '"' + ": 1}"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+        //Debug.Log("Test message published");
+        client.Publish("1_" + id + "_" + dvc, System.Text.Encoding.UTF8.GetBytes("{" + '"' + "bocina" + '"' + ": 0}"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
     }
 
     protected override void OnConnecting()
@@ -63,13 +64,13 @@ public class M2MqttUnityGame : M2MqttUnityClient
 
     protected override void SubscribeTopics()
     {
-        client.Subscribe(new string[] { id.ToString() }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE }); //"Pong" + id }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+        client.Subscribe(new string[] { "1_" + id.ToString() }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
         //Debug.Log("sus");
     }
 
     protected override void UnsubscribeTopics()
     {
-        client.Unsubscribe(new string[] { id.ToString() }); //"Pong" + id });
+        client.Unsubscribe(new string[] { "1_" + id.ToString() });
     }
 
     protected override void OnConnectionFailed(string errorMessage)
@@ -103,7 +104,7 @@ public class M2MqttUnityGame : M2MqttUnityClient
     {
         string msg = System.Text.Encoding.UTF8.GetString(message);
         //Debug.Log("Received: " + msg);
-        if (topic == id.ToString())//"Pong" + id)
+        if (topic == "1_" + id.ToString())
         {
             SucreInput sucreInput = ProcessMessage(msg);
 
@@ -114,9 +115,9 @@ public class M2MqttUnityGame : M2MqttUnityClient
 
             
 
-            if (!menu.start)
+            if (!menu.start & sucreInput.deviceID == player.deviceID)
                 menu.start = sucreInput.boton;
-            else if (menu.start & !menu.playerSelected & !buffer)
+            else if (menu.start & !menu.playerSelected & !buffer & sucreInput.deviceID == player.deviceID)
                 menu.playerSelected = sucreInput.boton;
 
             if (menu.start & !menu.playerSelected)

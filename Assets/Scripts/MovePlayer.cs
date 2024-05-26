@@ -16,6 +16,7 @@ public class MovePlayer : MonoBehaviour
     Transform player;
     float cameraSize;
     float convfactor;
+    float offset;
 
     // Start is called before the first frame update
     void Start()
@@ -23,25 +24,25 @@ public class MovePlayer : MonoBehaviour
         player = this.GetComponent<Transform>();
         cameraSize = GameObject.Find("Main Camera").GetComponent<Camera>().orthographicSize;
         convfactor = (TOP_VALUE_POTENCIOMETER / 2) / cameraSize;
+        offset = player.lossyScale.y / 2;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        movePlayer(connected);
+        movePlayer();
     }
 
-    void movePlayer(bool connected)
+    void movePlayer()
     {
         if (connected)
         {
-            //Debug.Log("SucreControls");
             float y = ((TOP_VALUE_POTENCIOMETER / 2) - input) / convfactor;
 
-            if (y >= cameraSize - 3f)
-                y = cameraSize - 3f;
-            else if (y <= -(cameraSize - 3f))
-                y = -(cameraSize - 3f);
+            if (y >= cameraSize - offset)
+                y = cameraSize - offset;
+            else if (y <= -(cameraSize - offset))
+                y = -(cameraSize - offset);
 
             Vector3 target = new Vector3(player.position.x, y, 0f);
 
@@ -54,7 +55,7 @@ public class MovePlayer : MonoBehaviour
             {
                 float y = player.position.y;
                 y += 1.1f;
-                if (y <= cameraSize - 3f)
+                if (y <= cameraSize - offset)
                     player.position = new Vector3(player.position.x, y, 0f);
             }
 
@@ -62,7 +63,7 @@ public class MovePlayer : MonoBehaviour
             {
                 float y = player.position.y;
                 y -= 1.1f;
-                if (y >= -(cameraSize - 3f))
+                if (y >= -(cameraSize - offset))
                     player.position = new Vector3(player.position.x, y, 0f);
             }
         }

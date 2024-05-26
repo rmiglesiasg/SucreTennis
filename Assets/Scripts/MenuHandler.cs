@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,8 @@ public class MenuHandler : MonoBehaviour
     public GameObject ID;
     public Image firstPlayer;
     public Image secondPlayer;
+    public TextMeshProUGUI playerName;
+    public TextMeshProUGUI rivalName;
 
     MovePlayer player;
     MoveRival rival;
@@ -27,7 +30,7 @@ public class MenuHandler : MonoBehaviour
     private void Awake()
     {
         Time.timeScale = 0f;
-        firstPlayer.color = DarkGrey;
+        firstPlayer.color = Color.white;
         secondPlayer.color = DarkGrey;
     }
 
@@ -67,10 +70,12 @@ public class MenuHandler : MonoBehaviour
 
     void menuController()
     {
+        playerName.text = player.deviceID;
+        rivalName.text = rival.deviceID;
         
         if (selector <= 512 & player.deviceID != "")
         {
-            Debug.Log("P1");
+            //Debug.Log("P1");
             mode = 1;
             firstPlayer.color = Color.white;
             if (rival.deviceID != "")
@@ -78,7 +83,7 @@ public class MenuHandler : MonoBehaviour
         }
         else if(selector > 512 & rival.deviceID != "")
         {
-            Debug.Log("P2");
+            //Debug.Log("P2");
             secondPlayer.color = Color.white;
             firstPlayer.color = Color.gray;
             mode = 2;

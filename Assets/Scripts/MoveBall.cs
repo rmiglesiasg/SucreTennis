@@ -14,6 +14,7 @@ public class MoveBall : MonoBehaviour
     Rigidbody2D ball;
     Rigidbody2D player;
     Rigidbody2D rival;
+    M2MqttUnityGame mqtt;
 
     public TextMeshProUGUI playerScore;
     public TextMeshProUGUI rivalScore;
@@ -27,6 +28,7 @@ public class MoveBall : MonoBehaviour
     int dirX;
     int dirY;
     float cameraSize;
+    float offset;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +37,9 @@ public class MoveBall : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
         rival = GameObject.Find("Rival").GetComponent<Rigidbody2D>();
         cameraSize = GameObject.Find("Main Camera").GetComponent<Camera>().orthographicSize;
+        mqtt = GameObject.Find("MQTTHandler").GetComponent<M2MqttUnityGame>();
 
+        offset = player.transform.lossyScale.y / 2;
         vel = initVel;
         initialShot(0, 2);
     }
@@ -45,20 +49,24 @@ public class MoveBall : MonoBehaviour
     {
         ball.velocity = new Vector2(dirX*vel, dirY*vel);
 
-        if (ball.position.y >= cameraSize - 3f & dirY > 0)
+        if (ball.position.y >= (cameraSize - offset) & dirY > 0)
             dirY *= -1;
-        else if (ball.position.y <= -(cameraSize - 3f) & dirY < 0)
+        else if (ball.position.y <= -(cameraSize - offset) & dirY < 0)
             dirY *= -1;
 
         if (ball.position.x <= player.position.x + PLAYER_GOAL_OFFSET)
         {
             initialShot(1, 2);
             rivalScore.text = (int.Parse(rivalScore.text) + 1).ToString();
+            
+            if (GameObject.Find("Rival").GetComponent<MoveRival>().deviceID != "")
+                mqtt.Publish(GameObject.Find("Rival").GetComponent<MoveRival>().deviceID);
         }
         else if (ball.position.x >= rival.position.x + RIVAL_GOAL_OFFSET)
         {
             initialShot(0, 1);
             playerScore.text = (int.Parse(playerScore.text) + 1).ToString();
+            mqtt.Publish(GameObject.Find("Player").GetComponent<MovePlayer>().deviceID);
         }
     }
 
@@ -76,7 +84,7 @@ public class MoveBall : MonoBehaviour
         }
     }
 
-    System.Random rnd = new();
+    System.Random rnd = new System.Random();
     int diry, dirx;
     void initialShot(int ply, int rvl)
     {
