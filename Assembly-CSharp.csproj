@@ -81,6 +81,7 @@
     <Compile Include="Assets\M2Mqtt\Properties\AssemblyInfo.cs" />
     <Compile Include="Assets\M2Mqtt\Utility\QueueExtension.cs" />
     <Compile Include="Assets\M2Mqtt\WinRT\Queue.cs" />
+    <Compile Include="Assets\Scripts\CountDownAnimHandler.cs" />
     <Compile Include="Assets\M2Mqtt\Internal\MsgPublishedInternalEvent.cs" />
     <Compile Include="Assets\Scripts\MoveRival.cs" />
     <Compile Include="Assets\M2Mqtt\Net\MqttNetworkChannel.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Assets\M2Mqtt\Messages\MqttMsgPubcomp.cs" />
     <Compile Include="Assets\M2Mqtt\Internal\MsgInternalEvent.cs" />
     <Compile Include="Assets\M2Mqtt\Exceptions\MqttClientException.cs" />
+    <Compile Include="Assets\Scripts\GoalAnimHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

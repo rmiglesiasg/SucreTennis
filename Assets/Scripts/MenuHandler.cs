@@ -12,8 +12,12 @@ public class MenuHandler : MonoBehaviour
     public bool start = false;
     public bool playerSelected = false;
     public int selector;
+    public bool countEnd = false;
+    bool game = false;
 
-    public GameObject playerSelector;
+    public GameObject FPButton;
+    public GameObject SPButton;
+    public GameObject countdown;
     public GameObject scoreboard;
     public GameObject startMenu;
     public GameObject ID;
@@ -49,22 +53,38 @@ public class MenuHandler : MonoBehaviour
 
     void startGame()
     {
-        if (start & !playerSelected)
+        if (game)
         {
-            playerSelector.SetActive(true);
+
+        }
+        else if (start & !playerSelected)
+        {
+            FPButton.SetActive(true);
+            SPButton.SetActive(true);
+            countdown.SetActive(false);
             startMenu.SetActive(false);
             menuController();
             
         }
-        else if(start & playerSelected)
+        else if (start & playerSelected & !countEnd)
         {
+            FPButton.SetActive(false);
+            SPButton.SetActive(false);
+            countdown.SetActive(true);
+            this.GetComponent<Animator>().SetBool("countdown", true);
+            
+        }
+        else if (start & playerSelected & countEnd)
+        {
+            countdown.SetActive(false);
             if (mode == 2)
                 rival.secondPlayer = true;
 
             scoreboard.SetActive(true);
-            playerSelector.SetActive(false);
+            countdown.SetActive(false);
             ID.SetActive(false);
             Time.timeScale = 1f;
+            game = true;
         }
     }
 

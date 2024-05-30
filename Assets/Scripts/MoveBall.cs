@@ -15,6 +15,7 @@ public class MoveBall : MonoBehaviour
     Rigidbody2D player;
     Rigidbody2D rival;
     M2MqttUnityGame mqtt;
+    Animator anim;
 
     public TextMeshProUGUI playerScore;
     public TextMeshProUGUI rivalScore;
@@ -38,6 +39,7 @@ public class MoveBall : MonoBehaviour
         rival = GameObject.Find("Rival").GetComponent<Rigidbody2D>();
         cameraSize = GameObject.Find("Main Camera").GetComponent<Camera>().orthographicSize;
         mqtt = GameObject.Find("MQTTHandler").GetComponent<M2MqttUnityGame>();
+        anim = GameObject.Find("Canvas").GetComponent<Animator>();
 
         offset = player.transform.lossyScale.y / 2;
         vel = initVel;
@@ -56,6 +58,9 @@ public class MoveBall : MonoBehaviour
 
         if (ball.position.x <= player.position.x + PLAYER_GOAL_OFFSET)
         {
+            anim.GetComponentInParent<Animator>().SetBool("goal", true);
+            Time.timeScale = 0f;
+
             initialShot(1, 2);
             rivalScore.text = (int.Parse(rivalScore.text) + 1).ToString();
             
@@ -64,9 +69,13 @@ public class MoveBall : MonoBehaviour
         }
         else if (ball.position.x >= rival.position.x + RIVAL_GOAL_OFFSET)
         {
+            anim.GetComponentInParent<Animator>().SetBool("goal", true);
+            Time.timeScale = 0f;
+
             initialShot(0, 1);
             playerScore.text = (int.Parse(playerScore.text) + 1).ToString();
             mqtt.Publish(GameObject.Find("Player").GetComponent<MovePlayer>().deviceID);
+            
         }
     }
 

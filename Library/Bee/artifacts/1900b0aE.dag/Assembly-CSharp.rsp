@@ -417,6 +417,8 @@
 "Assets/M2Mqtt/WinRT/Hashtable.cs"
 "Assets/M2Mqtt/WinRT/MqttNetworkChannel.cs"
 "Assets/M2Mqtt/WinRT/Queue.cs"
+"Assets/Scripts/CountDownAnimHandler.cs"
+"Assets/Scripts/GoalAnimHandler.cs"
 "Assets/Scripts/M2MqttUnityClient.cs"
 "Assets/Scripts/M2MqttUnityGame.cs"
 "Assets/Scripts/MenuHandler.cs"
