@@ -55,8 +55,6 @@ public class MoveRival : MonoBehaviour
 
             Debug.Log("target: " + target);
 
-            //Debug.Log(PLAYER_SPEED * Time.deltaTime);
-
             rival.position = Vector3.MoveTowards(rival.position, target, PLAYER_SPEED * Time.deltaTime);
 
             Debug.Log("pspeed + dtime: " + PLAYER_SPEED * Time.deltaTime);
@@ -82,5 +80,13 @@ public class MoveRival : MonoBehaviour
                 rival.Translate(Vector2.zero);
             }
         }
+    }
+
+    public void reset()
+    {
+        rival.position = new Vector2(rival.position.x, 0f);
+        deviceID = "";
+        secondPlayer = false;
+        dir = 0;
     }
 }

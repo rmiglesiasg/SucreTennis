@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Networking.PlayerConnection;
 using UnityEngine;
 
 public class MovePlayer : MonoBehaviour
@@ -67,5 +66,12 @@ public class MovePlayer : MonoBehaviour
                     player.position = new Vector3(player.position.x, y, 0f);
             }
         }
+    }
+
+    public void reset()
+    {
+        player.position = new Vector2(player.position.x, 0f);
+        connected = false;
+        deviceID = "";
     }
 }

@@ -39,6 +39,7 @@ public class M2MqttUnityGame : M2MqttUnityClient
     MenuHandler menu;
     MovePlayer player;
     MoveRival rival;
+    MoveBall ball;
     int id;
     
 
@@ -59,18 +60,19 @@ public class M2MqttUnityGame : M2MqttUnityClient
     protected override void OnConnected()
     {
         player.connected = true;
+        client.Publish("1_" + id, System.Text.Encoding.UTF8.GetBytes("Connected"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
         base.OnConnected();
     }
 
     protected override void SubscribeTopics()
     {
         client.Subscribe(new string[] { "1_" + id.ToString() }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-        //Debug.Log("sus");
     }
 
     protected override void UnsubscribeTopics()
     {
         client.Unsubscribe(new string[] { "1_" + id.ToString() });
+        Debug.Log("UnSub");
     }
 
     protected override void OnConnectionFailed(string errorMessage)
@@ -94,8 +96,9 @@ public class M2MqttUnityGame : M2MqttUnityClient
         menu = GameObject.Find("Canvas").GetComponent<MenuHandler>();
         player = GameObject.Find("Player").GetComponent<MovePlayer>();
         rival = GameObject.Find("Rival").GetComponent<MoveRival>();
+        ball = GameObject.Find("Ball").GetComponent<MoveBall>();
         id = 1;//rnd.Next(100000);
-        idText.text += id;
+        idText.text = "ID: " + id;
         Connect();
     }
 
@@ -112,8 +115,6 @@ public class M2MqttUnityGame : M2MqttUnityClient
                 player.deviceID = sucreInput.deviceID;
             else if (rival.deviceID == "" & sucreInput.deviceID != player.deviceID)
                 rival.deviceID = sucreInput.deviceID;
-
-            
 
             if (!menu.start & sucreInput.deviceID == player.deviceID)
                 menu.start = sucreInput.boton;
@@ -132,9 +133,7 @@ public class M2MqttUnityGame : M2MqttUnityClient
                 buffer = true;
             else
                 buffer = false;
-
         }
-
     }
 
     private SucreInput ProcessMessage(string msg)
@@ -187,5 +186,20 @@ public class M2MqttUnityGame : M2MqttUnityClient
     private void OnValidate()
     {
         
+    }
+
+    public void ResetGame()
+    {
+        menu.reset();
+        player.reset();
+        rival.reset();
+        ball.reset();
+
+        //Disconnect();
+        this.UnsubscribeTopics();
+        id = 1;//rnd.Next(100000);
+        idText.text = "ID: " + id;
+        this.SubscribeTopics();
+       // Connect();
     }
 }

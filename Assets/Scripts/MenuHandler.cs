@@ -14,6 +14,7 @@ public class MenuHandler : MonoBehaviour
     public int selector;
     public bool countEnd = false;
     bool game = false;
+    int mode = 1;
 
     public GameObject FPButton;
     public GameObject SPButton;
@@ -28,7 +29,7 @@ public class MenuHandler : MonoBehaviour
 
     MovePlayer player;
     MoveRival rival;
-    int mode = 1;
+    
 
 
     private void Awake()
@@ -108,5 +109,22 @@ public class MenuHandler : MonoBehaviour
             firstPlayer.color = Color.gray;
             mode = 2;
         }
+    }
+
+    public void reset()
+    {
+        start = false;
+        playerSelected = false;
+        countEnd = false;
+        game = false;
+        mode = 1;
+        scoreboard.SetActive(false);
+        FPButton.SetActive(false);
+        SPButton.SetActive(false);
+        countdown.SetActive(false);
+        ID.SetActive(true);
+        startMenu.SetActive(true);
+        firstPlayer.color = Color.white;
+        secondPlayer.color = DarkGrey;
     }
 }

@@ -64,6 +64,7 @@
     <Compile Include="Assets\M2Mqtt\Messages\MqttMsgPuback.cs" />
     <Compile Include="Assets\M2Mqtt\WinRT\MqttNetworkChannel.cs" />
     <Compile Include="Assets\M2Mqtt\MqttSettings.cs" />
+    <Compile Include="Assets\Scripts\EndAnimHandler.cs" />
     <Compile Include="Assets\M2Mqtt\Messages\MqttMsgUnsubscribe.cs" />
     <Compile Include="Assets\M2Mqtt\Messages\MqttMsgDisconnect.cs" />
     <Compile Include="Assets\M2Mqtt\MqttSecurity.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Assets\M2Mqtt\Messages\MqttMsgPubrel.cs" />
     <Compile Include="Assets\M2Mqtt\Exceptions\MqttTimeoutException.cs" />
     <Compile Include="Assets\M2Mqtt\MqttClient.cs" />
+    <Compile Include="Assets\Scripts\GoalAnimHandler.cs" />
     <Compile Include="Assets\Scripts\M2MqttUnityClient.cs" />
     <Compile Include="Assets\M2Mqtt\Messages\MqttMsgPublish.cs" />
     <Compile Include="Assets\M2Mqtt\Exceptions\MqttCommunicationException.cs" />
@@ -110,7 +112,6 @@
     <Compile Include="Assets\M2Mqtt\Messages\MqttMsgPubcomp.cs" />
     <Compile Include="Assets\M2Mqtt\Internal\MsgInternalEvent.cs" />
     <Compile Include="Assets\M2Mqtt\Exceptions\MqttClientException.cs" />
-    <Compile Include="Assets\Scripts\GoalAnimHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -402,6 +403,12 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.Types">
+      <HintPath>E:\Programas\UnityHub\Unitys\2021.3.4f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.Gradle">
+      <HintPath>E:\Programas\UnityHub\Unitys\2021.3.4f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>E:\Programas\UnityHub\Unitys\2021.3.4f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>
