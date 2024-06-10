@@ -121,7 +121,7 @@ public class M2MqttUnityGame : M2MqttUnityClient
             else if (menu.start & !menu.playerSelected & !buffer & sucreInput.deviceID == player.deviceID)
                 menu.playerSelected = sucreInput.boton;
 
-            if (menu.start & !menu.playerSelected)
+            if (menu.start & !menu.playerSelected & sucreInput.deviceID == player.deviceID)
                 menu.selector = sucreInput.control;
 
             if (sucreInput.deviceID == player.deviceID)
