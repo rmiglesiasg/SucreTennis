@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SucreInput //: MonoBehaviour
+public class SucreInput
 {
     public string deviceID;
     public int control;

@@ -34,7 +34,6 @@ public class MoveBall : MonoBehaviour
     float cameraSize;
     float offset;
 
-    // Start is called before the first frame update
     void Start()
     {
         ball = this.GetComponent<Rigidbody2D>();
@@ -49,7 +48,6 @@ public class MoveBall : MonoBehaviour
         initialShot(0, 2);
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         if (int.Parse(rivalScore.text) >= 5)
@@ -72,9 +70,15 @@ public class MoveBall : MonoBehaviour
         ball.velocity = new Vector2(dirX*vel, dirY*vel);
 
         if (ball.position.y >= (cameraSize - offset) & dirY > 0)
+        {
             dirY *= -1;
+            this.GetComponent<AudioSource>().Play();
+        }
         else if (ball.position.y <= -(cameraSize - offset) & dirY < 0)
+        {
             dirY *= -1;
+            this.GetComponent<AudioSource>().Play();
+        }
 
         if (ball.position.x <= player.position.x + PLAYER_GOAL_OFFSET)
         {
@@ -106,11 +110,13 @@ public class MoveBall : MonoBehaviour
         {
             dirX *= -1;
             vel += acc;
+            collision.gameObject.GetComponent<AudioSource>().Play();
         }
         else if (collision.collider.name == "Rival")
         {
             dirX *= -1;
             vel += acc;
+            collision.gameObject.GetComponent<AudioSource>().Play();
         }
     }
 

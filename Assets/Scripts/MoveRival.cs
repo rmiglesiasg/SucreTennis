@@ -21,7 +21,6 @@ public class MoveRival : MonoBehaviour
     public bool secondPlayer = false;
     public float rivalInput;
 
-    // Start is called before the first frame update
     void Start()
     {
         cameraSize = GameObject.Find("Main Camera").GetComponent<Camera>().orthographicSize;
@@ -31,7 +30,6 @@ public class MoveRival : MonoBehaviour
         offset = rival.lossyScale.y / 2;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         rivalControl();
@@ -43,9 +41,6 @@ public class MoveRival : MonoBehaviour
         {
             float y = ((TOP_VALUE_POTENCIOMETER / 2) - rivalInput) / convfactor;
 
-            Debug.Log("y: " + y);
-            Debug.Log("rivalInput: " + rivalInput);
-
             if (y >= cameraSize - offset)
                 y = cameraSize - offset;
             else if (y <= -(cameraSize - offset))
@@ -53,11 +48,7 @@ public class MoveRival : MonoBehaviour
 
             Vector3 target = new Vector3(rival.position.x, y, 0f);
 
-            Debug.Log("target: " + target);
-
             rival.position = Vector3.MoveTowards(rival.position, target, PLAYER_SPEED * Time.deltaTime);
-
-            Debug.Log("pspeed + dtime: " + PLAYER_SPEED * Time.deltaTime);
         }
         else
         {

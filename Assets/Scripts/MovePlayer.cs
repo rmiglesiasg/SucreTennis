@@ -17,7 +17,6 @@ public class MovePlayer : MonoBehaviour
     float convfactor;
     float offset;
 
-    // Start is called before the first frame update
     void Start()
     {
         player = this.GetComponent<Transform>();
@@ -26,7 +25,6 @@ public class MovePlayer : MonoBehaviour
         offset = player.lossyScale.y / 2;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         movePlayer();
