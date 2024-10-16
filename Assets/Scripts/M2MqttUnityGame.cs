@@ -24,12 +24,10 @@ public class M2MqttUnityGame : M2MqttUnityClient
 
     public void Publish(string dvc)
     {
-        client.Publish("1_" + id + "_" + dvc,
-            System.Text.Encoding.UTF8.GetBytes("{" + '"' + "bocina" + '"' + ": 1}"),
-            MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
-        client.Publish("1_" + id + "_" + dvc,
-            System.Text.Encoding.UTF8.GetBytes("{" + '"' + "bocina" + '"' + ": 0}"),
-            MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+        client.Publish("1_" + id + "_" + dvc, System.Text.Encoding.UTF8.GetBytes("{" + '"' + "bocina" + '"' + ": 1}"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+
+
+        client.Publish("1_" + id + "_" + dvc, System.Text.Encoding.UTF8.GetBytes("{" + '"' + "bocina" + '"' + ": 0}"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
     }
 
     protected override void OnConnecting()
@@ -48,8 +46,7 @@ public class M2MqttUnityGame : M2MqttUnityClient
 
     protected override void SubscribeTopics()
     {
-        client.Subscribe(new string[] { "1_" + id.ToString() },
-            new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+        client.Subscribe(new string[] { "1_" + id.ToString() }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
     }
 
     protected override void UnsubscribeTopics()

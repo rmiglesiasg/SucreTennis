@@ -18,6 +18,7 @@ public class MoveBall : MonoBehaviour
     Rigidbody2D rival;
     M2MqttUnityGame mqtt;
     Animator anim;
+    MenuHandler mh;
 
     public TextMeshProUGUI playerScore;
     public TextMeshProUGUI rivalScore;
@@ -36,6 +37,7 @@ public class MoveBall : MonoBehaviour
 
     void Start()
     {
+        mh = GameObject.Find("Canvas").GetComponent<MenuHandler>();
         ball = this.GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
         rival = GameObject.Find("Rival").GetComponent<Rigidbody2D>();
@@ -52,7 +54,7 @@ public class MoveBall : MonoBehaviour
     {
         if (int.Parse(rivalScore.text) >= 5)
         {
-            if (GameObject.Find("Rival").GetComponent<MoveRival>().deviceID != "")
+            if (GameObject.Find("Rival").GetComponent<MoveRival>().deviceID != "" & mh.mode == 2)
                 endText.text = WIN_TEXT + GameObject.Find("Rival").GetComponent<MoveRival>().deviceID;
             else
                 endText.text = LOSS_TEXT;

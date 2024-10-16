@@ -14,7 +14,8 @@ public class MenuHandler : MonoBehaviour
     public int selector;
     public bool countEnd = false;
     bool game = false;
-    int mode = 1;
+    
+    public int mode = 1;
 
     public GameObject FPButton;
     public GameObject SPButton;
